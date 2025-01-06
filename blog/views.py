@@ -13,9 +13,14 @@ def post_list(request):
     )
 
 
-def post_detail(request, id):
+def post_detail(request, year, month, day, post):
     try:
-        post = Post.published.get(id=id)
+        post = Post.published.get(
+            slug=post,
+            publish__year=year,
+            publish__month=month,
+            publish__day=day
+        )
     except Post.DoesNotExist:
         raise Http404('Post does not exist')
     return render(
